@@ -1,0 +1,3 @@
+/home/user/TrieTree/cmake-build-debug/CMakeFiles/TrieTree.dir
+/home/user/TrieTree/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/user/TrieTree/cmake-build-debug/CMakeFiles/rebuild_cache.dir
