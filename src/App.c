@@ -59,6 +59,10 @@ int requestOption(App *app) {
     return 1;
 }
 
+// Verifica se todos os caracteres da palavra são validos, padronizando quando necessário
+// Pré-condição: nenhuma
+// Pós-condição: Retorna 1 caso todos os caracteres da palavra sejam validos e 0 caso contrario, transforma
+// todos carateres alfabeticos para o formato minusculo.
 int isValidWord(char* str) {
     while(*str != '\0') {
         if (!isalpha(*str))
@@ -73,32 +77,41 @@ int isValidWord(char* str) {
 // Pré-condição: Ponteiro para instancia valida do app
 // Pós-condição: Opcao executada caso encontrada
 void executeOption(App *app) {
+    char* buffer;
+    int count = 0;
+    FILE* file;
+
     switch (app->option) {
         case OP_INSERT: {
-            FILE* file = requestFile();
-            char* buffer;
-            int count = 0;
+            file = requestFile();
             while((buffer = aux_readLine(file))) {
                 if (isValidWord(buffer)) {
                     insert(app->tree, buffer);
+                    printf("Palavra inserida: %s\n", buffer);
                     count++;
+                } else {
+                    printf("Palavra invalida: %s\n", buffer);
                 }
                 free(buffer);
             }
             printf("Foram adicionadas %d palavras ao dicionario\n", count);
         } break;
         case OP_REMOVE: {
-            FILE* file = requestFile();
-            char* buffer;
-            int count = 0;
+            file = requestFile();
             while((buffer = aux_readLine(file))) {
                 if (isValidWord(buffer)) {
-                    removeOne(app->tree, buffer);
-                    count++;
+                    if (removeOne(app->tree, buffer)) {
+                        printf("Palavra removida: %s\n", buffer);
+                        count++;
+                    } else {
+                        printf("Palavra nao encontrada: %s\n", buffer);
+                    }
+                } else {
+                    printf("Palavra invalida: %s\n", buffer);
                 }
                 free(buffer);
             }
-            printf("Foram removidas %d palavras ao dicionario\n", count);
+            printf("Foram removidas %d palavras do dicionario\n", count);
         } break;
         case OP_SEARCH: {
             printf("Digite a palavra a ser consultada: ");
@@ -155,4 +168,3 @@ void printMenu() {
     printf("5 - Sair\n\n");
     printf("Insira o numero da opcao desejada: ");
 }
-

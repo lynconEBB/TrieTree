@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "TreeTrie.h"
 
+// Enum apresentando as opções disponiveis pare serem executadas pela aplicação
 typedef enum {
     OP_INSERT = 1,
     OP_REMOVE = 2,
@@ -11,8 +12,9 @@ typedef enum {
     OP_EXIT = 5
 } Option;
 
+// Estrutura representando os componentes da aplicação
 typedef struct {
-    Option option;
+    Option option; // Opção lida
     TreeTrie* tree;
 } App;
 
@@ -35,6 +37,12 @@ void startApp(App* app);
 // Pré-condição: Ponteiro para instancia valida do app
 // Pós-condição: Opcao executada caso encontrada
 void executeOption(App* app);
+
+// Verifica se todos os caracteres da palavra são validos, padronizando quando necessário
+// Pré-condição: nenhuma
+// Pós-condição: Retorna 1 caso todos os caracteres da palavra sejam validos e 0 caso contrario, transforma
+// todos carateres alfabeticos para o formato minusculo.
+int isValidWord(char* str);
 
 // Requisita opcao ao usuário
 // Pré-condição: Ponteiro para instancia valida do app
